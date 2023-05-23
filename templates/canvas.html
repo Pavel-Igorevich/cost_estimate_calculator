@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Калькулятор холста
+{% endblock %}
+{% block body %}
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+      <h2>Калькулятор холста</h2>
+    </div>
+    <div class=" h-100 d-flex justify-content-center align-items-center">
+        <form class="needs-validation " action="" method="post">
+            {{ form.hidden_tag() }}
+            <div class="container d-grid gap-3">
+                <div class="row p-2 bg-light border">
+                    <div class="col">
+                        {{ form.material.label(class="form-label fs-4") }}
+                    </div>
+                    <div class="col">
+                        {{ form.material(class='form-select fs-4') }}
+                    </div>
+                </div>
+                <div class="row p-2 bg-light border">
+                    <div class="col">
+                        {{ form.processing.label(class="form-label fs-4") }}
+                    </div>
+                    <div class="col">
+                        {{ form.processing(class='form-select fs-4') }}
+                    </div>
+                </div>
+                <div class="row row-cols-2 p-2 bg-light border">
+                    <div class="col-12 text-center">
+                        <label class="form-label fs-4">Размеры холста</label>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-2 pt-2 pb-2">
+                        {{ form.length.label(class="form-label fs-4") }}
+                    </div>
+                    <div class="col-8">
+                        {{ form.length(class='form-control fs-4') }}
+                    </div>
+                    <div class="col-2">
+                        <label class="fs-4"> мм. </label>
+                    </div>
+                    <div class="col-2 pt-2 pb-2">
+                        {{ form.width.label(class="form-label fs-4") }}
+                    </div>
+                    <div class="col-8">
+                        {{ form.width(class='form-control fs-4') }}
+                    </div>
+                    <div class="col-2">
+                        <label class="fs-4"> мм. </label>
+                    </div>
+                </div>
+                <div class="row row-cols-2 p-2 bg-light border">
+                    <div class="col-2 pt-2 pb-2">
+                        {{ form.quantity.label(class="form-label fs-4") }}
+                    </div>
+                    <div class="col-8">
+                        {{ form.quantity(class='form-control fs-4') }}
+                    </div>
+                    <div class="col-2">
+                        <label class="fs-4"> шт. </label>
+                    </div>
+                </div>
+                {{ form.submit(class='btn btn-primary fs-4')}}
+            </div>
+        </form>
+    </div>
+  </main>
+</div>
+
+{% if data %}
+<script>
+    $(document).ready(function() {
+    $("#staticBackdrop").modal('show');
+    });
+</script>
+{% endif %}
+{% endblock %}
+
+{% block modal %}
+    {% if data %}
+    <div class="container">
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col-12 m-1 text-center">
+                <strong>Материал:</strong> {{ data['material'][0] }}
+            </div>
+            <div class="w-100"><hr></div>
+            <div class="col">
+                <strong>Себестоимость (шт.):</strong> {{ data['material'][1] }} &#8381;
+            </div>
+            <div class="col">
+                <strong>Стоимость продажи (шт.):</strong> {{ data['material'][2] }} &#8381;
+            </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col-12 m-1 text-center">
+                <strong>Обработка:</strong> {{ data['processing'][0] }}
+            </div>
+            <div class="w-100"><hr></div>
+            <div class="col">
+                <strong>Себестоимость (шт.):</strong> {{ data['processing'][1] }} &#8381;
+            </div>
+            <div class="col">
+                <strong>Стоимость продажи (шт.):</strong> {{ data['processing'][2] }} &#8381;
+            </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col">
+                <strong>Размер:</strong> {{ data['size'] }} &#13217;
+            </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col">
+                <strong>Количество:</strong> {{ data['quantity'] }} шт.
+            </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col">
+                <strong>Общая себестоимость:</strong>
+            </div>
+            <div class="col">
+                {{ data['main_price'] }} &#8381;
+            </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col">
+                <strong>Общая стоимость продажи:</strong>
+            </div>
+            <div class="col">
+                {{ data['main_sale_price'] }} &#8381;
+            </div>
+        </div>
+    <!--todo таблица-->
+    <!--                <div class="table-responsive">-->
+    <!--                    <table class="table table-borderless text-center">-->
+    <!--                        <thead>-->
+    <!--                            <tr>-->
+    <!--                                <th></th>-->
+    <!--                                <th>Материал</th>-->
+    <!--                                <th>Обработка</th>-->
+    <!--                                <th>Размер (&#13217;)</th>-->
+    <!--                                <th>Количество</th>-->
+    <!--                                <th>Стоимость, руб.</th>-->
+    <!--                            </tr>-->
+    <!--                        </thead>-->
+    <!--                        <tbody>-->
+    <!--                            <tr>-->
+    <!--                                <th>Себестоимость</th>-->
+    <!--                                <td>Томаты свежие</td>-->
+    <!--                                <td>кг</td>-->
+    <!--                                <td rowspan="2" class="align-middle">кг</td>-->
+    <!--                                <td rowspan="2" class="align-middle">15,20</td>-->
+    <!--                                <td>1048,80</td>-->
+    <!--                            </tr>-->
+    <!--                            <tr>-->
+    <!--                                <th>Продажа</th>-->
+    <!--                                <td>Огурцы свежие</td>-->
+    <!--                                <td>48,00</td>-->
+    <!--                                <td>120,00</td>-->
+    <!--                            </tr>-->
+    <!--                        </tbody>-->
+    <!--                    </table>-->
+    <!--                </div>-->
+    </div>
+    {% endif %}
+{% endblock %}
