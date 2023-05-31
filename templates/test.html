@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Калькулятор холста
+{% endblock %}
+{% block body %}
+
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-secondary ">
+    {{ form.left_side(class="form-check-input position-relative", autocomplete="off") }}
+    {{ form.left_side.label(class="form-check-label") }}
+  </label>
+  <label class="btn btn-secondary ">
+    {{ form.right_side(class="form-check-input position-relative", autocomplete="off") }}
+    {{ form.right_side.label(class="form-check-label") }}
+  </label>
+  <label class="btn btn-secondary ">
+    {{ form.top_side(class="form-check-input position-relative", autocomplete="off") }}
+    {{ form.top_side.label(class="form-check-label") }}
+  </label>
+  <label class="btn btn-secondary ">
+    {{ form.down_side(class="form-check-input position-relative", autocomplete="off") }}
+    {{ form.down_side.label(class="form-check-label") }}
+  </label>
+  <label class="btn btn-secondary ">
+    {{ form.around_side(class="form-check-input position-relative", autocomplete="off") }}
+    {{ form.around_side.label(class="form-check-label") }}
+  </label>
+  <label class="btn btn-secondary ">
+    {{ form.corner_side(class="form-check-input position-relative", autocomplete="off") }}
+    {{ form.corner_side.label(class="form-check-label") }}
+  </label>
+</div>
+
+<!-- Стили для подсветки выбранных элементов -->
+<style>
+  .btn-primary.active {
+    background-color: #007bff !important;
+  }
+
+  .btn-secondary.active {
+    background-color: #6c757d !important;
+  }
+</style>
+
+<!-- Скрипт для обновления состояния кнопок при изменении значения полей и добавления класса active при клике на кнопку -->
+<script type="text/javascript">
+  $(function() {
+    // Добавляем обработчик изменений полей
+    $('input[type="checkbox"]').change(function() {
+      // Изменяем состояние кнопок
+      var checked = $(this).is(':checked');
+      $(this).parent().toggleClass('btn-primary', checked).toggleClass('btn-secondary', !checked);
+    });
+
+    // Добавляем обработчик клика на кнопки
+    $('label.btn').click(function() {
+      // Добавляем класс active
+      $(this).toggleClass('active');
+      // Удаляем класс active из других кнопок
+      $('label.btn').not(this).removeClass('active');
+    });
+  });
+</script>
+
+<script>
+  // Добавляем обработчик клика на кнопку form.around_side
+  $('label.btn input[name=around_side]').click(function() {
+    var isChecked = $(this).is(':checked');
+
+    if (isChecked) {
+      // Выбрана кнопка form.around_side
+      // Снимаем выделение со всех остальных кнопок и отключаем их
+      $('label.btn input[type=checkbox]').not(this).prop('checked', false).parent().removeClass('active btn-primary').addClass('btn-secondary');
+      // Выделяем кнопку form.around_side
+      $(this).parent().removeClass('btn-secondary').addClass('active btn-primary');
+    } else {
+      // Кнопка form.around_side была отключена, возвращаем все кнопки в начальное состояние
+      $('label.btn input[type=checkbox]').prop('checked', false).parent().removeClass('active btn-primary').addClass('btn-secondary');
+    }
+  });
+
+  // Добавляем обработчик клика на все остальные кнопки
+  $('label.btn input[type=checkbox]').not('input[name=around_side]').click(function() {
+    var isChecked = $(this).is(':checked');
+
+    if (isChecked) {
+      // Выбрана другая кнопка
+      // Снимаем выделение с кнопки form.around_side и отключаем её
+      $('label.btn input[name=around_side]').prop('checked', false).parent().removeClass('active btn-primary').addClass('btn-secondary');
+      // Выделяем выбранную кнопку
+      $(this).parent().removeClass('btn-secondary').addClass('active btn-primary');
+    } else {
+      // Кнопка была отключена, снимаем выделение с неё
+      $(this).parent().removeClass('active btn-primary').addClass('btn-secondary');
+    }
+  });
+</script>
+
+
+
+
+{% endblock %}

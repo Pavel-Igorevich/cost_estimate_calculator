@@ -1,7 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import SelectField, IntegerField, SubmitField, DecimalField
+from wtforms import SelectField, IntegerField, SubmitField, DecimalField, BooleanField, SelectMultipleField
 from wtforms.validators import DataRequired, NumberRange
 from data import DATA
+
+
+class TestForm(FlaskForm):
+    left_side = BooleanField(label='Левая')
+    right_side = BooleanField(label='Правая')
+    top_side = BooleanField(label='Верх')
+    down_side = BooleanField(label='Низ')
+    around_side = BooleanField(label='Все стороны')
+    corner_side = BooleanField(label='По углам')
 
 
 class FlexibleDecimalField(DecimalField):
@@ -60,12 +69,12 @@ class BannerForm(FlaskForm):
         choices=print_quality_choices,
         validators=[DataRequired()]
     )
-    processing_side = SelectField(
-        "Сторона обработки: ",
-        choices=['Недоступно'],
-        validate_choice=False,
-        validators=[]
-    )
+    left_side = BooleanField(label='Левая')
+    right_side = BooleanField(label='Правая')
+    top_side = BooleanField(label='Верх')
+    down_side = BooleanField(label='Низ')
+    around_side = BooleanField(label='Все стороны')
+    corner_side = BooleanField(label='По углам')
     welding_step = SelectField(
         "Шаг сварки: ",
         choices=['Недоступно'],
@@ -85,3 +94,24 @@ class BannerForm(FlaskForm):
         validators=[DataRequired(), NumberRange(min=1)],
     )
     submit = SubmitField('Рассчитать')
+
+    def validate(self, **kwargs):
+        if not super().validate():
+            return False
+    
+        if not any(
+                [
+                    self.left_side.data,
+                    self.right_side.data,
+                    self.top_side.data,
+                    self.around_side.data,
+                    self.corner_side.data
+                ]
+        ) and DATA['Баннер']['data']['Обработка'][self.processing.data].get('Сторона'):
+            self.left_side.errors.append('Необходимо выбрать "Стороны обработки"')
+            if self.welding_step.data and self.welding_step.data != 'Недоступно':
+                self.welding_step.errors.append(self.welding_step.data)
+            return False
+    
+        return True
+    

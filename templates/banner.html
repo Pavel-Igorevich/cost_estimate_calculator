@@ -14,41 +14,72 @@
             {{ form.hidden_tag() }}
             <div class="container d-grid gap-3">
                 <div class="row p-2 bg-light border">
-                    <div class="col">
-                        {{ form.material.label(class="form-label fs-4") }}
+                    <div class="col p-2 d-flex align-items-center">
+                        {{ form.material.label(class="form-label fs-4 mb-0") }}
                     </div>
-                    <div class="col">
+                    <div class="col p-2">
                         {{ form.material(class='form-select fs-4') }}
                     </div>
                 </div>
                 <div class="row p-2 bg-light border">
-                    <div class="col">
-                        {{ form.print_quality.label(class="form-label fs-4") }}
+                    <div class="col p-2 d-flex align-items-center">
+                        {{ form.print_quality.label(class="form-label fs-4 mb-0") }}
                     </div>
-                    <div class="col">
+                    <div class="col p-2">
                         {{ form.print_quality(class='form-select fs-4') }}
                     </div>
                 </div>
                 <div class="row p-2 bg-light border">
-                    <div class="col">
-                        {{ form.processing.label(class="form-label fs-4") }}
+                    <div class="col col-6 p-2 d-flex align-items-center">
+                        {{ form.processing.label(class="form-label fs-4 md-0") }}
                     </div>
-                    <div class="col">
+                    <div class="col col-6 p-2">
                         {{ form.processing(class='form-select fs-4') }}
                     </div>
-                    <div class="w-100"><hr></div>
-                    <div class="col-6">
-                        {{ form.processing_side.label(class="form-label fs-4") }}
-                        {{ form.processing_side(class='form-select fs-4') }}
+                    <div class="col col-4 p-2" id="block_ps_label" >
+                        <label class="fs-4 mb-0">Стороны обработки:</label>
                     </div>
-                    <div class="col col-6">
-                        {{ form.welding_step.label(class="form-label fs-4") }}
+                    <div class="col col-8 p-2" style="justify-content: flex-end; align-items: center; display: flex;" id="block_ps" >
+                        <div class="form-check form-check-inline fs-4" id="left_side_id">
+                          {{ form.left_side(class="form-check-input") }}
+                          {{ form.left_side.label(class="form-check-label") }}
+                        </div>
+                        <div class="form-check form-check-inline fs-4" id="right_side_id">
+                          {{ form.right_side(class="form-check-input") }}
+                          {{ form.right_side.label(class="form-check-label") }}
+                        </div>
+                        <div class="form-check form-check-inline fs-4" id="top_side_id">
+                          {{ form.top_side(class="form-check-input") }}
+                          {{ form.top_side.label(class="form-check-label") }}
+                        </div>
+                        <div class="form-check form-check-inline fs-4" id="down_side_id">
+                          {{ form.down_side(class="form-check-input") }}
+                          {{ form.down_side.label(class="form-check-label") }}
+                        </div>
+                        <div class="form-check form-check-inline fs-4" id="around_side_id">
+                          {{ form.around_side(class="form-check-input") }}
+                          {{ form.around_side.label(class="form-check-label") }}
+                        </div>
+                        <div class="form-check form-check-inline fs-4" id="corner_side_id">
+                          {{ form.corner_side(class="form-check-input") }}
+                          {{ form.corner_side.label(class="form-check-label") }}
+                        </div>
+                    </div>
+                    <div class="col p-2" id="block_ws_label">
+                        {{ form.welding_step.label(class="form-label fs-4 mb-0") }}
+                    </div>
+                    <div class="col p-2" id="block_ws">
                         {{ form.welding_step(class='form-select fs-4') }}
                     </div>
                 </div>
+                {% if form.left_side.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <p class="fs-4 text-center">{{ form.left_side.errors[0] }}</p>
+                    </div>
+                {% endif %}
                 <div class="row row-cols-2 p-2 bg-light border">
                     <div class="col-12 text-center">
-                        <label class="form-label fs-4">Размеры холста</label>
+                        <label class="form-label fs-4">Размеры баннера</label>
                     </div>
                     <div class="w-100"></div>
                     <div class="col-2 pt-2 pb-2">
@@ -88,6 +119,7 @@
   </main>
 </div>
 
+<!-- скрипт для изменения качества при выборе материала "Сетка"  -->
 <script>
     let material_select = document.getElementById('material')
     let print_quality_select = document.getElementById('print_quality')
@@ -106,24 +138,28 @@
     }
 </script>
 
+<!-- Скрипт изменения чекбоксов сторон и выбора шага обработки при разных выборах селекта "Обработка" -->
 <script>
     let processing_select = document.getElementById('processing')
-    let type_proccess_select = document.getElementById('processing_side')
     let step_select = document.getElementById('welding_step')
+
     processing_select.onchange = function() {
-        state = processing_select.value;
+        let state = processing_select.value;
         fetch('/banner/process/' + state).then(function(response) {
             response.json().then(function(data) {
-                let optionHTMLchoices = '';
-                for (let choice of data.choices) {
-                    if ( typeof(choice) !== "undefined" && choice !== null ) {
-                        optionHTMLchoices += '<option value="' + choice + '">' + choice + '</option>';
-                    }
+                document.getElementById("block_ps").hidden = data.hide_choices;
+                document.getElementById("block_ps_label").hidden = data.hide_choices;
+                for (let id of data.choices) {
+                    document.getElementById(id[0]).hidden = id[1];
                 }
-                type_proccess_select.innerHTML = optionHTMLchoices;
                 let optionHTMLsteps = '';
                 for (let step of data.steps) {
-                    if ( typeof(step) !== "undefined" && step !== null ) {
+                    if (step === 'Недоступно') {
+                        document.getElementById("block_ws").style.display = 'none';
+                        document.getElementById("block_ws_label").style.display = 'none';
+                    } else {
+                        document.getElementById("block_ws").style.display = 'block';
+                        document.getElementById("block_ws_label").style.display = 'block';
                         optionHTMLsteps += '<option value="' + step + '">' + step + '</option>';
                     }
                 }
@@ -133,7 +169,115 @@
     }
 </script>
 
+<!-- Скрипт для сохраниения такого же окна при отправке формы и не прохождению валидации -->
+<script>
+    window.addEventListener('DOMContentLoaded', function(){
+        let step_select = document.getElementById('welding_step');
+        let processing_select = document.getElementById('processing');
+        let state = processing_select.value;
+        fetch('/banner/process/' + state).then(function(response) {
+            response.json().then(function(data) {
+                document.getElementById("block_ps").hidden = data.hide_choices;
+                document.getElementById("block_ps_label").hidden = data.hide_choices;
+                for (let id of data.choices) {
+                    document.getElementById(id[0]).hidden = id[1];
+                }
+                let optionHTMLsteps = '';
+                for (let step of data.steps) {
+                    if (step === 'Недоступно') {
+                        document.getElementById("block_ws").style.display = 'none';
+                        document.getElementById("block_ws_label").style.display = 'none';
+                    } else {
+                        document.getElementById("block_ws").style.display = 'block';
+                        document.getElementById("block_ws_label").style.display = 'block';
+                        if (default_step === step) {
+                            optionHTMLsteps += '<option value="' + step + '" selected>' + step + '</option>';
+                        } else {
+                             optionHTMLsteps += '<option value="' + step + '">' + step + '</option>';
+                        }
+                    }
+                }
+                step_select.innerHTML = optionHTMLsteps;
+            });
+         });
+    });
+</script>
 
+<!-- Скрипт для получения шага обработки при отправке формы и не прохождении валидации -->
+{% if form.welding_step.errors %}
+<script>
+    const default_step = "{{ form.welding_step.errors[0] }}"
+</script>
+{% endif %}
+
+<!-- Скрипт для убирания галочек лево право верх низ при выборе все стороны -->
+<script type="text/javascript">
+    $(function() {
+      // Добавляем обработчик изменений поля around_side
+      $('#around_side').change(function() {
+        var isChecked = $(this).is(':checked');
+  
+        // Если галочка установлена, отключаем другие поля, иначе включаем их обратно
+        $('#left_side, #right_side, #top_side, #down_side, #corner_side')
+          .prop('checked', false);
+  
+        // Если нет других выбранных полей, отменяем выбор around_side
+        if (!isChecked &&
+            !$('#left_side').is(':checked') &&
+            !$('#right_side').is(':checked') &&
+            !$('#top_side').is(':checked') &&
+            !$('#down_side').is(':checked') &&
+            !$('#corner_side').is(':checked')) {
+          $(this).prop('checked', true);
+        }
+      });
+  
+      // Добавляем обработчик изменений других полей
+      $('#left_side, #right_side, #top_side, #down_side, #corner_side')
+        .not('#around_side')
+        .change(function() {
+          // Если есть другие выбранные поля, снимаем выбор с поля around_side
+          if ($('#left_side').is(':checked') ||
+              $('#right_side').is(':checked') ||
+              $('#top_side').is(':checked') ||
+              $('#down_side').is(':checked') ||
+              $('#corner_side').is(':checked')) {
+            $('#around_side').prop('checked', false);
+          }
+        });
+    });
+</script>
+
+<!-- Скрипт убирающий все галочки при изменении типа обработки -->
+<script type="text/javascript">
+    $(document).ready(function() {
+      // Получаем поля
+      const processingField = $("#{{ form.processing.id }}");
+      const leftSideField = $("#{{ form.left_side.id }}");
+      const rightSideField = $("#{{ form.right_side.id }}");
+      const topSideField = $("#{{ form.top_side.id }}");
+      const downSideField = $("#{{ form.down_side.id }}");
+      const aroundSideField = $("#{{ form.around_side.id }}");
+      const cornerSideField = $("#{{ form.corner_side.id }}");
+    
+      // Функция для сброса значений других полей
+      function resetOtherFields() {
+        leftSideField.prop("checked", false);
+        rightSideField.prop("checked", false);
+        topSideField.prop("checked", false);
+        downSideField.prop("checked", false);
+        aroundSideField.prop("checked", false);
+        cornerSideField.prop("checked", false);
+      }
+    
+      // Слушаем изменения в поле "processing"
+      processingField.change(function() {
+        resetOtherFields();
+      });
+    });
+</script>
+
+<!-- Скрипт вызывающий модальное окно при нажатии кнопки расчета -->
 {% if data %}
 <script>
     $(document).ready(function() {
@@ -143,7 +287,7 @@
 {% endif %}
 {% endblock %}
 
-
+<!-- Модальное окно результатов расчета -->
 {% block modal %}
     {% if data %}
     <div class="container">
