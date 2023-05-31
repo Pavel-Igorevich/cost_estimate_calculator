@@ -52,24 +52,24 @@
                           {{ form.top_side(class="form-check-input") }}
                           {{ form.top_side.label(class="form-check-label") }}
                         </div>
-                        <div class="form-check form-check-inline fs-4" id="down_side_id">
-                          {{ form.down_side(class="form-check-input") }}
-                          {{ form.down_side.label(class="form-check-label") }}
+                        <div class="form-check form-check-inline fs-4" id="bottom_side_id">
+                          {{ form.bottom_side(class="form-check-input") }}
+                          {{ form.bottom_side.label(class="form-check-label") }}
                         </div>
-                        <div class="form-check form-check-inline fs-4" id="around_side_id">
-                          {{ form.around_side(class="form-check-input") }}
-                          {{ form.around_side.label(class="form-check-label") }}
+                        <div class="form-check form-check-inline fs-4" id="all_sides_id">
+                          {{ form.all_sides(class="form-check-input") }}
+                          {{ form.all_sides.label(class="form-check-label") }}
                         </div>
-                        <div class="form-check form-check-inline fs-4" id="corner_side_id">
-                          {{ form.corner_side(class="form-check-input") }}
-                          {{ form.corner_side.label(class="form-check-label") }}
+                        <div class="form-check form-check-inline fs-4" id="corners_id">
+                          {{ form.corners(class="form-check-input") }}
+                          {{ form.corners.label(class="form-check-label") }}
                         </div>
                     </div>
                     <div class="col p-2" id="block_ws_label">
                         {{ form.welding_step.label(class="form-label fs-4 mb-0") }}
                     </div>
                     <div class="col p-2" id="block_ws">
-                        {{ form.welding_step(class='form-select fs-4') }}
+                        {{ form.welding_step(class='form-select fs-4') }} 
                     </div>
                 </div>
                 {% if form.left_side.errors %}
@@ -213,36 +213,36 @@
 <!-- Скрипт для убирания галочек лево право верх низ при выборе все стороны -->
 <script type="text/javascript">
     $(function() {
-      // Добавляем обработчик изменений поля around_side
-      $('#around_side').change(function() {
+      // Добавляем обработчик изменений поля all_sides
+      $('#all_sides').change(function() {
         var isChecked = $(this).is(':checked');
   
         // Если галочка установлена, отключаем другие поля, иначе включаем их обратно
-        $('#left_side, #right_side, #top_side, #down_side, #corner_side')
+        $('#left_side, #right_side, #top_side, #bottom_side, #corners')
           .prop('checked', false);
   
-        // Если нет других выбранных полей, отменяем выбор around_side
+        // Если нет других выбранных полей, отменяем выбор all_sides
         if (!isChecked &&
             !$('#left_side').is(':checked') &&
             !$('#right_side').is(':checked') &&
             !$('#top_side').is(':checked') &&
-            !$('#down_side').is(':checked') &&
-            !$('#corner_side').is(':checked')) {
+            !$('#bottom_side').is(':checked') &&
+            !$('#corners').is(':checked')) {
           $(this).prop('checked', true);
         }
       });
   
       // Добавляем обработчик изменений других полей
-      $('#left_side, #right_side, #top_side, #down_side, #corner_side')
-        .not('#around_side')
+      $('#left_side, #right_side, #top_side, #bottom_side, #corners')
+        .not('#all_sides')
         .change(function() {
-          // Если есть другие выбранные поля, снимаем выбор с поля around_side
+          // Если есть другие выбранные поля, снимаем выбор с поля all_sides
           if ($('#left_side').is(':checked') ||
               $('#right_side').is(':checked') ||
               $('#top_side').is(':checked') ||
-              $('#down_side').is(':checked') ||
-              $('#corner_side').is(':checked')) {
-            $('#around_side').prop('checked', false);
+              $('#bottom_side').is(':checked') ||
+              $('#corners').is(':checked')) {
+            $('#all_sides').prop('checked', false);
           }
         });
     });
@@ -256,9 +256,9 @@
       const leftSideField = $("#{{ form.left_side.id }}");
       const rightSideField = $("#{{ form.right_side.id }}");
       const topSideField = $("#{{ form.top_side.id }}");
-      const downSideField = $("#{{ form.down_side.id }}");
-      const aroundSideField = $("#{{ form.around_side.id }}");
-      const cornerSideField = $("#{{ form.corner_side.id }}");
+      const downSideField = $("#{{ form.bottom_side.id }}");
+      const aroundSideField = $("#{{ form.all_sides.id }}");
+      const cornerSideField = $("#{{ form.corners.id }}");
     
       // Функция для сброса значений других полей
       function resetOtherFields() {
@@ -293,46 +293,56 @@
     <div class="container">
         <div class="row p-2 mb-2 bg-light border">
             <div class="col-12 m-1 text-center">
-                <strong>Материал:</strong> {{ data['material'][0] }}
+                <strong>Материал:</strong> {{ data['material']['type'] }}
             </div>
             <div class="w-100"><hr></div>
             <div class="col">
-                <strong>Себестоимость (шт.):</strong> {{ data['material'][1] }} &#8381;
+                <strong>Себестоимость (шт.):</strong> {{ data['material']['price'] }} &#8381;
             </div>
             <div class="col">
-                <strong>Стоимость продажи (шт.):</strong> {{ data['material'][2] }} &#8381;
+                <strong>Стоимость продажи (шт.):</strong> {{ data['material']['sale_price'] }} &#8381;
             </div>
         </div>
         <div class="row p-2 mb-2 bg-light border">
             <div class="col-12 m-1 text-center">
-                <strong>Обработка:</strong> {{ data['processing'][0] }}
+                <strong>Обработка:</strong> {{ data['processing']['type'] }}
             </div>
-            {% if data['welding_step'] %}
+            <div class="w-100"><hr></div>
+            <div class="col text-center">
+                <strong>Себестоимость (шт.):</strong> {{ data['processing']['price'] }} &#8381;
+            </div>
+            <div class="col text-center">
+                <strong>Стоимость продажи (шт.):</strong> {{ data['processing']['sale_price'] }} &#8381;
+            </div>
+            {% if data['processing']['sides'] and  data['processing']['welding_step']%}
+            <div class="w-100"><hr></div>
+            <div class="col-8">
+                <strong>Стороны обработки:</strong> {{ data['processing']['sides'] }}
+            </div>
+            <div class="col-4">
+                <strong>Шаг сварки:</strong> {{ data['processing']['welding_step'] }}
+            </div>
+            {% elif data['processing']['sides'] %}
+            <div class="w-100"><hr></div>
+            <div class="col text-center">
+                <strong>Стороны обработки:</strong> {{ data['processing']['sides'] }}
+            </div>
+            {% elif data['processing']['welding_step'] %}
             <div class="w-100"><hr></div>
             <div class="col-12 m-1 text-center">
-                <strong>Шаг сварки:</strong> {{ data['welding_step'] }}
-            </div>
-            {% endif %}
-            <div class="w-100"><hr></div>
-            <div class="col">
-                <strong>Себестоимость (шт.):</strong> {{ data['processing'][1] }} &#8381;
-            </div>
-            <div class="col">
-                <strong>Стоимость продажи (шт.):</strong> {{ data['processing'][2] }} &#8381;
-            </div>
-            {% if data['processing_side'][0] %}
-            <div class="w-100"><hr></div>
-            <div class="col">
-                <strong>Сторона обработки:</strong> {{ data['processing_side'][0] }}
-            </div>
-            <div class="col">
-                <strong>Доп. стоимость обработки:</strong> {{ data['processing_side'][1] }} &#8381;
+                <strong>Шаг сварки:</strong> {{ data['processing']['welding_step'] }}
             </div>
             {% endif %}
         </div>
         <div class="row p-2 mb-2 bg-light border">
-            <div class="col">
-                <strong>Размер:</strong> {{ data['size'] }} &#13217;
+            <div class="col text-center">
+                <strong>Длина:</strong> {{ data['length'] }} мм
+            </div>
+            <div class="col text-center">
+                <strong>Ширина:</strong> {{ data['width'] }} мм
+            </div>
+            <div class="col text-center">
+                <strong>Размер:</strong> {{ data['size'] }} м&#178;
             </div>
         </div>
         <div class="row p-2 mb-2 bg-light border">
@@ -355,6 +365,27 @@
             <div class="col">
                 {{ data['main_sale_price'] }} &#8381;
             </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col-12 m-1 text-center">
+                <strong>Расходные материалы</strong>
+            </div>
+            <div class="w-100"><hr></div>
+            <div class="col">
+                <strong>Материал:</strong> {{ data['material']['name'] }}
+            </div>
+            <div class="col">
+                <strong>Расход:</strong> {{ data['material']['consumption'] }} м&#178;
+            </div>
+            {% if data['processing']['material'] %}
+            <div class="w-100"><hr></div>
+            <div class="col">
+                <strong>Материал:</strong> {{ data['processing']['material'] }}
+            </div>
+            <div class="col">
+                <strong>Расход:</strong> {{ data['processing']['consumption'] }} м
+            </div>
+            {% endif %}
         </div>
     </div>
     {% endif %}

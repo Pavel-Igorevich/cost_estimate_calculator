@@ -85,31 +85,37 @@
     <div class="container">
         <div class="row p-2 mb-2 bg-light border">
             <div class="col-12 m-1 text-center">
-                <strong>Материал:</strong> {{ data['material'][0] }}
+                <strong>Материал:</strong> {{ data['material']['type'] }}
             </div>
             <div class="w-100"><hr></div>
-            <div class="col">
-                <strong>Себестоимость (шт.):</strong> {{ data['material'][1] }} &#8381;
+            <div class="col text-center">
+                <strong>Себестоимость (шт.):</strong> {{ data['material']['price'] }} &#8381;
             </div>
-            <div class="col">
-                <strong>Стоимость продажи (шт.):</strong> {{ data['material'][2] }} &#8381;
+            <div class="col text-center">
+                <strong>Стоимость продажи (шт.):</strong> {{ data['material']['sale_price'] }} &#8381;
             </div>
         </div>
         <div class="row p-2 mb-2 bg-light border">
             <div class="col-12 m-1 text-center">
-                <strong>Обработка:</strong> {{ data['processing'][0] }}
+                <strong>Обработка:</strong> {{ data['processing']['type'] }}
             </div>
             <div class="w-100"><hr></div>
-            <div class="col">
-                <strong>Себестоимость (шт.):</strong> {{ data['processing'][1] }} &#8381;
+            <div class="col text-center">
+                <strong>Себестоимость (шт.):</strong> {{ data['processing']['price'] }} &#8381;
             </div>
-            <div class="col">
-                <strong>Стоимость продажи (шт.):</strong> {{ data['processing'][2] }} &#8381;
+            <div class="col text-center">
+                <strong>Стоимость продажи (шт.):</strong> {{ data['processing']['sale_price'] }} &#8381;
             </div>
         </div>
         <div class="row p-2 mb-2 bg-light border">
-            <div class="col">
-                <strong>Размер:</strong> {{ data['size'] }} &#13217;
+            <div class="col text-center">
+                <strong>Длина:</strong> {{ data['length'] }} мм;
+            </div>
+            <div class="col text-center">
+                <strong>Ширина:</strong> {{ data['width'] }} мм;
+            </div>
+            <div class="col text-center">
+                <strong>Размер:</strong> {{ data['size'] }} м&#178;
             </div>
         </div>
         <div class="row p-2 mb-2 bg-light border">
@@ -119,19 +125,36 @@
         </div>
         <div class="row p-2 mb-2 bg-light border">
             <div class="col">
-                <strong>Общая себестоимость:</strong>
-            </div>
-            <div class="col">
+                <strong>Общая себестоимость: </strong>
                 {{ data['main_price'] }} &#8381;
             </div>
         </div>
         <div class="row p-2 mb-2 bg-light border">
             <div class="col">
-                <strong>Общая стоимость продажи:</strong>
-            </div>
-            <div class="col">
+                <strong>Общая стоимость продажи: </strong>
                 {{ data['main_sale_price'] }} &#8381;
             </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col-12 m-1 text-center">
+                <strong>Расходные материалы</strong>
+            </div>
+            <div class="w-100"><hr></div>
+            <div class="col">
+                <strong>Материал:</strong> {{ data['material']['name'] }}
+            </div>
+            <div class="col">
+                <strong>Расход:</strong> {{ data['material']['consumption'] }} м&#178;
+            </div>
+            {% if data['processing']['material'] %}
+            <div class="w-100"><hr></div>
+            <div class="col">
+                <strong>Материал:</strong> {{ data['processing']['material'] }}
+            </div>
+            <div class="col">
+                <strong>Расход:</strong> {{ data['processing']['consumption'] }} м
+            </div>
+            {% endif %}
         </div>
     </div>
     {% endif %}

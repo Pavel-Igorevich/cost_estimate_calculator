@@ -8,9 +8,9 @@ class TestForm(FlaskForm):
     left_side = BooleanField(label='Левая')
     right_side = BooleanField(label='Правая')
     top_side = BooleanField(label='Верх')
-    down_side = BooleanField(label='Низ')
-    around_side = BooleanField(label='Все стороны')
-    corner_side = BooleanField(label='По углам')
+    bottom_side = BooleanField(label='Низ')
+    all_sides = BooleanField(label='Все стороны')
+    corners = BooleanField(label='По углам')
 
 
 class FlexibleDecimalField(DecimalField):
@@ -72,9 +72,9 @@ class BannerForm(FlaskForm):
     left_side = BooleanField(label='Левая')
     right_side = BooleanField(label='Правая')
     top_side = BooleanField(label='Верх')
-    down_side = BooleanField(label='Низ')
-    around_side = BooleanField(label='Все стороны')
-    corner_side = BooleanField(label='По углам')
+    bottom_side = BooleanField(label='Низ')
+    all_sides = BooleanField(label='Все стороны')
+    corners = BooleanField(label='По углам')
     welding_step = SelectField(
         "Шаг сварки: ",
         choices=['Недоступно'],
@@ -104,8 +104,9 @@ class BannerForm(FlaskForm):
                     self.left_side.data,
                     self.right_side.data,
                     self.top_side.data,
-                    self.around_side.data,
-                    self.corner_side.data
+                    self.bottom_side.data,
+                    self.all_sides.data,
+                    self.corners.data
                 ]
         ) and DATA['Баннер']['data']['Обработка'][self.processing.data].get('Сторона'):
             self.left_side.errors.append('Необходимо выбрать "Стороны обработки"')
