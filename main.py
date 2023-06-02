@@ -34,6 +34,7 @@ def canvas():
         sale_price_proccessing = data_canvsas['Обработка'][form.processing.data]['Продажа']
         length = float(form.length.data)
         width = float(form.width.data)
+        raw_length, raw_width = length, width
         if length < 500:
             length = 500
         if width < 500:
@@ -66,8 +67,8 @@ def canvas():
                 'consumption': process_consumption
             },
             'size': square,
-            'length': length,
-            'width': width,
+            'length': raw_length,
+            'width': raw_width,
             'quantity': form.quantity.data,
             'main_price': main_price,
             'main_sale_price': main_sale_price
@@ -80,8 +81,6 @@ def canvas():
 def banner():
     form = BannerForm()
     if form.validate_on_submit():
-        for _ in form.data.items():
-            print(_)
         data_banner = DATA['Баннер']['data']
         print_quality = form.print_quality.data
         price_material = data_banner['Материал'][form.material.data][print_quality]['Себестоимость']
@@ -89,6 +88,7 @@ def banner():
         material_name = data_banner['Материал'][form.material.data]['Материал']
         length = float(form.length.data)
         width = float(form.width.data)
+        raw_length, raw_width = length, width
         if length < 500:
             length = 500
         if width < 500:
@@ -165,8 +165,8 @@ def banner():
                 'consumption': process_consumption
             },
             'size': square,
-            'length': length,
-            'width': width,
+            'length': raw_length,
+            'width': raw_width,
             'quantity': form.quantity.data,
             'main_price': main_price,
             'main_sale_price': main_sale_price
