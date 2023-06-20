@@ -5,118 +5,119 @@
 {% endblock %}
 {% block body %}
 <div class="container">
-  <main>
-    <div class="py-5 text-center">
-      <h2>Калькулятор баннера</h2>
-    </div>
-    <div class=" h-100 d-flex justify-content-center align-items-center">
-        <form class="needs-validation " action="" method="post">
-            {{ form.hidden_tag() }}
-            <div class="container d-grid gap-3">
-                <div class="row p-2 bg-light border">
-                    <div class="col p-2 d-flex align-items-center">
-                        {{ form.material.label(class="form-label fs-4 mb-0") }}
-                    </div>
-                    <div class="col p-2">
-                        {{ form.material(class='form-select fs-4') }}
-                    </div>
-                </div>
-                <div class="row p-2 bg-light border">
-                    <div class="col p-2 d-flex align-items-center">
-                        {{ form.print_quality.label(class="form-label fs-4 mb-0") }}
-                    </div>
-                    <div class="col p-2">
-                        {{ form.print_quality(class='form-select fs-4') }}
-                    </div>
-                </div>
-                <div class="row p-2 bg-light border">
-                    <div class="col col-6 p-2 d-flex align-items-center">
-                        {{ form.processing.label(class="form-label fs-4 md-0") }}
-                    </div>
-                    <div class="col col-6 p-2">
-                        {{ form.processing(class='form-select fs-4') }}
-                    </div>
-                    <div class="col col-4 p-2" id="block_ps_label" >
-                        <label class="fs-4 mb-0">Стороны обработки:</label>
-                    </div>
-                    <div class="col col-8 p-2" style="justify-content: flex-end; align-items: center; display: flex;" id="block_ps" >
-                        <div class="form-check form-check-inline fs-4" id="left_side_id">
-                          {{ form.left_side(class="form-check-input") }}
-                          {{ form.left_side.label(class="form-check-label") }}
+    <main>
+        <div class="py-5 text-center">
+            <h2>Калькулятор баннера</h2>
+        </div>
+        <div class=" h-100 d-flex justify-content-center align-items-center">
+            <form class="needs-validation " action="" method="post">
+                {{ form.hidden_tag() }}
+                <div class="container d-grid gap-3">
+                    <div class="row p-2 bg-light border">
+                        <div class="col p-2 d-flex align-items-center">
+                            {{ form.material.label(class="form-label fs-5 mb-0") }}
                         </div>
-                        <div class="form-check form-check-inline fs-4" id="right_side_id">
-                          {{ form.right_side(class="form-check-input") }}
-                          {{ form.right_side.label(class="form-check-label") }}
-                        </div>
-                        <div class="form-check form-check-inline fs-4" id="top_side_id">
-                          {{ form.top_side(class="form-check-input") }}
-                          {{ form.top_side.label(class="form-check-label") }}
-                        </div>
-                        <div class="form-check form-check-inline fs-4" id="bottom_side_id">
-                          {{ form.bottom_side(class="form-check-input") }}
-                          {{ form.bottom_side.label(class="form-check-label") }}
-                        </div>
-                        <div class="form-check form-check-inline fs-4" id="all_sides_id">
-                          {{ form.all_sides(class="form-check-input") }}
-                          {{ form.all_sides.label(class="form-check-label") }}
-                        </div>
-                        <div class="form-check form-check-inline fs-4" id="corners_id">
-                          {{ form.corners(class="form-check-input") }}
-                          {{ form.corners.label(class="form-check-label") }}
+                        <div class="col p-2">
+                            {{ form.material(class='form-select fs-5') }}
                         </div>
                     </div>
-                    <div class="col p-2" id="block_ws_label">
-                        {{ form.welding_step.label(class="form-label fs-4 mb-0") }}
+                    <div class="row p-2 bg-light border">
+                        <div class="col p-2 d-flex align-items-center">
+                            {{ form.print_quality.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col p-2">
+                            {{ form.print_quality(class='form-select fs-5') }}
+                        </div>
                     </div>
-                    <div class="col p-2" id="block_ws">
-                        {{ form.welding_step(class='form-select fs-4') }} 
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2 d-flex align-items-center">
+                            {{ form.processing.label(class="form-label fs-5 md-0") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.processing(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-4 p-2" id="block_ps_label">
+                            <label class="fs-5 mb-0">Стороны обработки:</label>
+                        </div>
+                        <div class="col col-8 p-2"
+                             style="justify-content: flex-end; align-items: center; display: flex;" id="block_ps">
+                            <div class="form-check form-check-inline fs-5" id="left_side_id">
+                                {{ form.left_side(class="form-check-input") }}
+                                {{ form.left_side.label(class="form-check-label") }}
+                            </div>
+                            <div class="form-check form-check-inline fs-5" id="right_side_id">
+                                {{ form.right_side(class="form-check-input") }}
+                                {{ form.right_side.label(class="form-check-label") }}
+                            </div>
+                            <div class="form-check form-check-inline fs-5" id="top_side_id">
+                                {{ form.top_side(class="form-check-input") }}
+                                {{ form.top_side.label(class="form-check-label") }}
+                            </div>
+                            <div class="form-check form-check-inline fs-5" id="bottom_side_id">
+                                {{ form.bottom_side(class="form-check-input") }}
+                                {{ form.bottom_side.label(class="form-check-label") }}
+                            </div>
+                            <div class="form-check form-check-inline fs-5" id="all_sides_id">
+                                {{ form.all_sides(class="form-check-input") }}
+                                {{ form.all_sides.label(class="form-check-label") }}
+                            </div>
+                            <div class="form-check form-check-inline fs-5" id="corners_id">
+                                {{ form.corners(class="form-check-input") }}
+                                {{ form.corners.label(class="form-check-label") }}
+                            </div>
+                        </div>
+                        <div class="col p-2" id="block_ws_label">
+                            {{ form.welding_step.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col p-2" id="block_ws">
+                            {{ form.welding_step(class='form-select fs-5') }}
+                        </div>
                     </div>
-                </div>
-                {% if form.left_side.errors %}
+                    {% if form.left_side.errors %}
                     <div class="alert alert-danger" role="alert">
-                        <p class="fs-4 text-center">{{ form.left_side.errors[0] }}</p>
+                        <p class="fs-5 text-center">{{ form.left_side.errors[0] }}</p>
                     </div>
-                {% endif %}
-                <div class="row row-cols-2 p-2 bg-light border">
-                    <div class="col-12 text-center">
-                        <label class="form-label fs-4">Размеры баннера</label>
+                    {% endif %}
+                    <div class="row row-cols-2 p-2 bg-light border">
+                        <div class="col-12 text-center">
+                            <label class="form-label fs-5">Размеры баннера</label>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.length.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.length(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2">
+                            <label class="fs-5"> мм. </label>
+                        </div>
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.width.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.width(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2">
+                            <label class="fs-5"> мм. </label>
+                        </div>
                     </div>
-                    <div class="w-100"></div>
-                    <div class="col-2 pt-2 pb-2">
-                        {{ form.length.label(class="form-label fs-4") }}
+                    <div class="row row-cols-2 p-2 bg-light border">
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.quantity.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.quantity(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2">
+                            <label class="fs-5"> шт. </label>
+                        </div>
                     </div>
-                    <div class="col-8">
-                        {{ form.length(class='form-control fs-4') }}
-                    </div>
-                    <div class="col-2">
-                        <label class="fs-4"> мм. </label>
-                    </div>
-                    <div class="col-2 pt-2 pb-2">
-                        {{ form.width.label(class="form-label fs-4") }}
-                    </div>
-                    <div class="col-8">
-                        {{ form.width(class='form-control fs-4') }}
-                    </div>
-                    <div class="col-2">
-                        <label class="fs-4"> мм. </label>
-                    </div>
+                    {{ form.submit(class='btn btn-primary fs-5')}}
                 </div>
-                <div class="row row-cols-2 p-2 bg-light border">
-                    <div class="col-2 pt-2 pb-2">
-                        {{ form.quantity.label(class="form-label fs-4") }}
-                    </div>
-                    <div class="col-8">
-                        {{ form.quantity(class='form-control fs-4') }}
-                    </div>
-                    <div class="col-2">
-                        <label class="fs-4"> шт. </label>
-                    </div>
-                </div>
-                {{ form.submit(class='btn btn-primary fs-4')}}
-            </div>
-        </form>
-    </div>
-  </main>
+            </form>
+        </div>
+    </main>
 </div>
 
 <!-- скрипт для изменения качества при выборе материала "Сетка"  -->
@@ -294,6 +295,10 @@
         <div class="row p-2 mb-2 bg-light border">
             <div class="col-12 m-1 text-center">
                 <strong>Материал:</strong> {{ data['material']['type'] }}
+            </div>
+            <div class="w-100"><hr></div>
+            <div class="col-12 m-1 text-center">
+                <strong>Качество печати:</strong> {{ data['material']['print_quality'] }}
             </div>
             <div class="w-100"><hr></div>
             <div class="col">

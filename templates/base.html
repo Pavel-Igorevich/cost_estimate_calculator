@@ -19,7 +19,7 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse fs-5" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Главная</a>
@@ -28,10 +28,10 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Типы изделий
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu fs-5" aria-labelledby="navbarDropdown">
               {% for name, page in products %}
                 <!--todo заглушка на не сделаные переходы-->
-                {% if page == 'canvas' or page == 'banner'%}
+                {% if page == 'canvas' or page == 'banner' or page == 'sheet_materials' or page == 'press_wall' %}
                 <li><a class="dropdown-item" href="/{{ page }}">{{ name }}</a></li>
                 {% else %}
                 <li><a class="dropdown-item" href="#">{{ name }}</a></li>
@@ -51,7 +51,7 @@
       <div class="list-group w-100 p-3">
         {% for name, page in products %}
         <!--todo заглушка на не сделаные переходы-->
-          {% if page == 'canvas' or page == 'banner' %}
+          {% if page == 'canvas' or page == 'banner' or page == 'sheet_materials' or page == 'press_wall' %}
           <a type="button" class="list-group-item list-group-item-action fs-3" href="/{{ page }}" >
             {{ name }}
           </a>

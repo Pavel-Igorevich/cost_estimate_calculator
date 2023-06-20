@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Калькулятор листовых материалов
+{% endblock %}
+{% block body %}
+<div class="container">
+    <main>
+        <div class="py-5 text-center">
+            <h2>Калькулятор листовых материалов</h2>
+        </div>
+        <div class=" h-100 d-flex justify-content-center align-items-center">
+            <form class="needs-validation " action="" method="post">
+                {{ form.hidden_tag() }}
+                <div class="container d-grid gap-3">
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2 d-flex align-items-center">
+                            {{ form.material.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.material(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_tm_label" hidden>
+                            {{ form.type_material.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_tm" hidden>
+                            {{ form.type_material(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_mt_label">
+                            {{ form.material_thickness.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_mt">
+                            {{ form.material_thickness(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_me_label" hidden>
+                            {{ form.material_edge.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_me" hidden>
+                            {{ form.material_edge(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2 d-flex align-items-center">
+                            {{ form.type_cutting.label(class="form-label fs-5 md-0") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.type_cutting(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2">
+                            {{ form.type_film.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.type_film(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_rtf_label">
+                            {{ form.rect_type_film.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_rtf">
+                            {{ form.rect_type_film(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 p-2 bg-light border">
+                        <div class="col p-2">
+                            {{ form.illumination.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col p-2">
+                            {{ form.illumination(class='form-select fs-5') }}
+                        </div>
+                        <div class="col p-2" id="block_aw_label" hidden>
+                            {{ form.additional_wire.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col p-2" id="block_aw" hidden>
+                            {{ form.additional_wire(class='form-control fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row p-2 bg-light border">
+                        <div class="col p-2">
+                            {{ form.holder.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col p-2">
+                            {{ form.holder(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row p-2 bg-light border">
+                        <div class="col p-2">
+                            {{ form.place_operation.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col p-2">
+                            {{ form.place_operation(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 p-2 bg-light border">
+                        <div class="col-12 text-center">
+                            <label class="form-label fs-5">Размеры</label>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.length.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.length(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2">
+                            <label class= fs-5> мм. </label>
+                        </div>
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.width.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.width(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2">
+                            <label class= fs-5> мм. </label>
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 p-2 bg-light border">
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.quantity_sheet_material.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.quantity_sheet_material(class='form-control fs-5') }}
+                        </div>
+                    </div>
+                    {{ form.submit(class='btn btn-primary fs-5')}}
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+<!-- Скрипт изменения выбора типа материала -->
+<script>
+    let material = document.getElementById('material')
+    let type_material = document.getElementById('type_material')
+    let material_thickness = document.getElementById('material_thickness')
+    material.onchange = function () {
+        let state = material.value;
+        fetch('/sheet_materials/material/' + state).then(function (response) {
+            response.json().then(function (data) {
+                document.getElementById("block_tm").hidden = data.hide_type;
+                document.getElementById("block_tm_label").hidden = data.hide_type;
+                document.getElementById("block_mt").hidden = data.hide_tickness;
+                document.getElementById("block_mt_label").hidden = data.hide_tickness;
+                document.getElementById("block_me").hidden = data.hide_edge;
+                document.getElementById("block_me_label").hidden = data.hide_edge;
+                let optionHTMLtype = '';
+                for (let step of data.type_material) {
+                    optionHTMLtype += '<option value="' + step + '">' + step + '</option>';
+                }
+                type_material.innerHTML = optionHTMLtype;
+                let optionHTMLthickness = '';
+                for (let step of data.tickness) {
+                    optionHTMLthickness += '<option value="' + step + '">' + step + '</option>';
+                }
+                material_thickness.innerHTML = optionHTMLthickness;
+            });
+        });
+    }
+</script>
+
+<!-- Скрипт изменения выбора толщины по типу материала -->
+<script>
+    type_material.onchange = function () {
+        let state_type = type_material.value;
+        let state = material.value;
+        fetch('/sheet_materials/tickness/' + state + '/' + state_type).then(function (response) {
+            response.json().then(function (data) {
+                document.getElementById("block_mt").hidden = data.hide_tickness;
+                document.getElementById("block_mt_label").hidden = data.hide_tickness;
+                let optionHTMLthickness = '';
+                for (let step of data.tickness) {
+                    optionHTMLthickness += '<option value="' + step + '">' + step + '</option>';
+                }
+                material_thickness.innerHTML = optionHTMLthickness;
+            });
+        });
+    }
+</script>
+
+<!--Скрипт для отображения вида накатки пленки-->
+<script>
+    let rect_type_film = document.getElementById('type_film')
+    rect_type_film.onchange = function () {
+        let value_rtm = rect_type_film.value;
+        if (value_rtm === 'Прямоугольник') {
+            document.getElementById("block_rtf_label").hidden = false;
+            document.getElementById("block_rtf").hidden = false;
+        } else {
+            document.getElementById("block_rtf_label").hidden = true;
+            document.getElementById("block_rtf").hidden = true;
+        }
+    }
+</script>
+
+<!--Скрипт для отображения доп провода в контуражной подсветке-->
+<script>
+    let illumination = document.getElementById('illumination')
+    illumination.onchange = function () {
+        let value_rtm = illumination.value;
+        if (value_rtm === 'Не требуется') {
+            document.getElementById("block_aw_label").hidden = true;
+            document.getElementById("block_aw").hidden = true;
+        } else {
+            document.getElementById("block_aw_label").hidden = false;
+            document.getElementById("block_aw").hidden = false;
+        }
+    }
+</script>
+
+<!-- Скрипт вызывающий модальное окно при нажатии кнопки расчета -->
+{% if data %}
+<script>
+    $(document).ready(function() {
+    $("#staticBackdrop").modal('show');
+    });
+</script>
+{% endif %}
+{% endblock %}
+
+<!-- Модальное окно результатов расчета -->
+{% block modal %}
+    {% if data %}
+<!--        Todo Сделать вывод и прочее с инфой от коли -->
+    <div class="container">
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col-12 m-1 text-center">
+                <strong>Материал:</strong> тест
+            </div>
+            <div class="w-100"><hr></div>
+            <div class="col-12 m-1 text-center">
+                <strong>Качество печати:</strong> тест
+            </div>
+            <div class="w-100"><hr></div>
+            <div class="col">
+                <strong>Себестоимость (шт.):</strong> тест &#8381;
+            </div>
+            <div class="col">
+                <strong>Стоимость продажи (шт.):</strong> тест &#8381;
+            </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col-12 m-1 text-center">
+                <strong>Обработка:</strong> тест
+            </div>
+            <div class="w-100"><hr></div>
+            <div class="col text-center">
+                <strong>Себестоимость (шт.):</strong> тест &#8381;
+            </div>
+            <div class="col text-center">
+                <strong>Стоимость продажи (шт.):</strong> тест &#8381;
+            </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col text-center">
+                <strong>Длина:</strong> тест мм
+            </div>
+            <div class="col text-center">
+                <strong>Ширина:</strong> тест мм
+            </div>
+            <div class="col text-center">
+                <strong>Размер:</strong> тест м&#178;
+            </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col">
+                <strong>Количество:</strong> тест шт.
+            </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col">
+                <strong>Общая себестоимость:</strong>
+            </div>
+            <div class="col">
+                тест &#8381;
+            </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col">
+                <strong>Общая стоимость продажи:</strong>
+            </div>
+            <div class="col">
+                тест &#8381;
+            </div>
+        </div>
+        <div class="row p-2 mb-2 bg-light border">
+            <div class="col-12 m-1 text-center">
+                <strong>Расходные материалы</strong>
+            </div>
+            <div class="w-100"><hr></div>
+            <div class="col">
+                <strong>Материал:</strong> тест
+            </div>
+            <div class="col">
+                <strong>Расход:</strong> тест м&#178;
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

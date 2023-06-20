@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Калькулятор Пресс-Волла
+{% endblock %}
+{% block body %}
+<div class="container">
+    <main>
+        <div class="py-5 text-center">
+            <h2>Калькулятор Пресс-Волла</h2>
+        </div>
+        <div class=" h-100 d-flex justify-content-center align-items-center">
+            <form class="needs-validation " action="" method="post">
+                {{ form.hidden_tag() }}
+                <div class="container d-grid gap-3">
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2 d-flex align-items-center">
+                            {{ form.sceleton.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.sceleton(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2">
+                            {{ form.overhead_elements.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.overhead_elements(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2">
+                            {{ form.other_side.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.other_side(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2">
+                            {{ form.print_quality.label(class="form-label fs-5 mb-0") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.print_quality(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 p-2 bg-light border">
+                        <div class="col-12 text-center">
+                            <label class="form-label fs-5">Размеры</label>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col col-6 pb-2" id="block_ds_label">
+                            {{ form.depth.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 pb-2" id="block_ds">
+                            {{ form.depth(class='form-select fs-5') }}
+                        </div>
+                        <div class="col-2 pt-2 pb-2" id="block_dс_label" hidden>
+                            {{ form.other_depth.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8" id="block_dс" hidden>
+                            {{ form.other_depth(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2" id="block_dс_size" hidden>
+                            <label class=fs-5> мм. </label>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.length.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.length(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2">
+                            <label class=fs-5> мм. </label>
+                        </div>
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.width.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.width(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2">
+                            <label class=fs-5> мм. </label>
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 p-2 bg-light border">
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.quantity.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.quantity(class='form-control fs-5') }}
+                        </div>
+                    </div>
+                    {{ form.submit(class='btn btn-primary fs-5')}}
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+<!--Скрипт отображения или скрытия глубины в зависимости от вида каркаса-->
+<script>
+    let sceleton = document.getElementById('sceleton')
+    let depth = document.getElementById('depth')
+    sceleton.onchange = function () {
+        let value_rtm = sceleton.value;
+        if (value_rtm === 'Брус' || value_rtm === 'Металл') {
+            document.getElementById("block_ds_label").hidden = false;
+            document.getElementById("block_ds").hidden = false;
+        } else {
+            document.getElementById("block_ds_label").hidden = true;
+            document.getElementById("block_ds").hidden = true;
+            depth.value = '0 мм';
+            document.getElementById("block_dс_label").hidden = true;
+            document.getElementById("block_dс").hidden = true;
+            document.getElementById("block_dc_size").hidden = true;
+        }
+    }
+</script>
+
+
+<!--Скрипт скрытия или показа ввода значения глубины-->
+<script>
+    depth.onchange = function () {
+        let value_rtm = depth.value;
+        if (value_rtm === 'Другая') {
+            document.getElementById("block_dс_label").hidden = false;
+            document.getElementById("block_dс").hidden = false;
+            document.getElementById("block_dc_size").hidden = false;
+        } else {
+            document.getElementById("block_dс_label").hidden = true;
+            document.getElementById("block_dс").hidden = true;
+            document.getElementById("block_dc_size").hidden = true;
+        }
+    }
+</script>
+{% endblock %}
