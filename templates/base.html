@@ -31,7 +31,7 @@
             <ul class="dropdown-menu fs-5" aria-labelledby="navbarDropdown">
               {% for name, page in products %}
                 <!--todo заглушка на не сделаные переходы-->
-                {% if page == 'canvas' or page == 'banner' or page == 'sheet_materials' or page == 'press_wall' or page == 'plastic' or page == 'height_figure' %}
+                {% if page == 'canvas' or page == 'banner' or page == 'sheet_materials' or page == 'press_wall' or page == 'plastic' or page == 'height_figure' or page == 'mobile_constructions' %}
                 <li><a class="dropdown-item" href="/{{ page }}">{{ name }}</a></li>
                 {% else %}
                 <li><a class="dropdown-item" href="#">{{ name }}</a></li>
@@ -51,7 +51,7 @@
       <div class="list-group w-100 p-3">
         {% for name, page in products %}
         <!--todo заглушка на не сделаные переходы-->
-          {% if page == 'canvas' or page == 'banner' or page == 'sheet_materials' or page == 'press_wall' or page == 'plastic' or page == 'height_figure' %}
+          {% if page == 'canvas' or page == 'banner' or page == 'sheet_materials' or page == 'press_wall' or page == 'plastic' or page == 'height_figure' or page == 'mobile_constructions' %}
           <a type="button" class="list-group-item list-group-item-action fs-3" href="/{{ page }}" >
             {{ name }}
           </a>

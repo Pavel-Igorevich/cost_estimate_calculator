@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Калькулятор мобильных конструкций
+{% endblock %}
+{% block body %}
+<div class="container">
+    <main>
+        <div class="py-5 text-center">
+            <h2>Калькулятор мобильных конструкций</h2>
+        </div>
+        <div class=" h-100 d-flex justify-content-center align-items-center">
+            <form class="needs-validation " action="" method="post">
+                {{ form.hidden_tag() }}
+                <div class="container d-grid gap-3">
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2">
+                            {{ form.construction.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.construction(class='form-select fs-5') }}
+                        </div>
+                        <!--roll-up select-->
+                        <div class="col col-6 p-2" id="roll-up_size_label">
+                            {{ form.roll_up_size.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2" id="roll-up_size">
+                            {{ form.roll_up_size(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="roll-up_banner_label">
+                            {{ form.roll_up_banner.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2" id="roll-up_banner">
+                            {{ form.roll_up_banner(class='form-select fs-5') }}
+                        </div>
+                        <!--x-banner select-->
+                        <div class="col col-6 p-2" id="x_size_label" hidden>
+                            {{ form.x_banner_size.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2" id="x_size" hidden>
+                            {{ form.x_banner_size(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="x_banner_label" hidden>
+                            {{ form.x_banner_banner.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2" id="x_banner" hidden>
+                            {{ form.x_banner_banner(class='form-select fs-5') }}
+                        </div>
+                        <!--joker select-->
+                        <div class="col col-6 p-2" id="joker_size_label" hidden>
+                            {{ form.joker_size.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2" id="joker_size" hidden>
+                            {{ form.joker_size(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="joker_lamin_label" hidden>
+                            {{ form.joker_lamination.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2" id="joker_lamin" hidden>
+                            {{ form.joker_lamination(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 p-2 bg-light border">
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.quantity.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.quantity(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2">
+                            <label class="fs-5"> шт. </label>
+                        </div>
+                    </div>
+                    {{ form.submit(class='btn btn-primary fs-5')}}
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+<!--Скрипт отображения или скрытия типа каркаса в зависимости от материала-->
+<script>
+    let construction = document.getElementById('construction')
+    construction.onchange = function () {
+        let value = construction.value;
+        if (value === 'Ролл-апп') {
+            document.getElementById("x_size_label").hidden = true;
+            document.getElementById("x_banner_label").hidden = true;
+            document.getElementById("joker_size_label").hidden = true;
+            document.getElementById("joker_lamin_label").hidden = true;
+            document.getElementById("x_size").hidden = true;
+            document.getElementById("x_banner").hidden = true;
+            document.getElementById("joker_size").hidden = true;
+            document.getElementById("joker_lamin").hidden = true;
+
+            document.getElementById("roll-up_size").hidden = false;
+            document.getElementById("roll-up_banner").hidden = false;
+            document.getElementById("roll-up_size_label").hidden = false;
+            document.getElementById("roll-up_banner_label").hidden = false;
+        } else if (value === 'Х-Баннер') {
+            document.getElementById("joker_size_label").hidden = true;
+            document.getElementById("joker_lamin_label").hidden = true;
+            document.getElementById("joker_size").hidden = true;
+            document.getElementById("joker_lamin").hidden = true;
+            document.getElementById("roll-up_size").hidden = true;
+            document.getElementById("roll-up_banner").hidden = true;
+            document.getElementById("roll-up_size_label").hidden = true;
+            document.getElementById("roll-up_banner_label").hidden = true;
+
+            document.getElementById("x_size_label").hidden = false;
+            document.getElementById("x_banner_label").hidden = false;
+            document.getElementById("x_size").hidden = false;
+            document.getElementById("x_banner").hidden = false;
+        } else {
+            document.getElementById("joker_size_label").hidden = false;
+            document.getElementById("joker_lamin_label").hidden = false;
+            document.getElementById("joker_size").hidden = false;
+            document.getElementById("joker_lamin").hidden = false;
+
+            document.getElementById("roll-up_size").hidden = true;
+            document.getElementById("roll-up_banner").hidden = true;
+            document.getElementById("roll-up_size_label").hidden = true;
+            document.getElementById("roll-up_banner_label").hidden = true;
+            document.getElementById("x_size_label").hidden = true;
+            document.getElementById("x_banner_label").hidden = true;
+            document.getElementById("x_size").hidden = true;
+            document.getElementById("x_banner").hidden = true;
+        }
+    }
+</script>
+
+{% if data %}
+<script>
+    $(document).ready(function () {
+        $("#staticBackdrop").modal('show');
+    });
+</script>
+{% endif %}
+{% endblock %}
