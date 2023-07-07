@@ -26,7 +26,6 @@ class CanvasForm(FlaskForm):
 		choices=processing_choices,
 		validators=[DataRequired()]
 	)
-	# todo возможны float значения, но 100 или 1000 не работают
 	length = FlexibleDecimalField(
 		'Длина холста: ',
 		validators=[DataRequired(), NumberRange(min=1)],

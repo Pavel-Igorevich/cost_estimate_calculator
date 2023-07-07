@@ -1,17 +1,17 @@
 from flask import render_template, jsonify
 from data import DATA
 from forms.sheet_materials_form import SheetMaterialsForm
-from pprint import pprint
+from calculations.sheet_materials_calc import main_calc
 
 PRODUCTS = sorted([[name, val['page']] for name, val in DATA.items()], key=lambda elem: elem[0])
 
 
 def sheet_materials():
 	form = SheetMaterialsForm()
+	return_data = None
 	if form.validate_on_submit():
-		# todo сделать Вывод и подсчет!!!!!!!!!
-		return render_template('sheet_materials.html', products=PRODUCTS, form=form, data=True)
-	return render_template('sheet_materials.html', products=PRODUCTS, form=form)
+		return_data = main_calc(form)
+	return render_template('sheet_materials.html', products=PRODUCTS, form=form, data=return_data)
 
 
 def type_material_state(state):

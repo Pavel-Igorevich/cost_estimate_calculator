@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Калькулятор пленки
+{% endblock %}
+{% block body %}
+<div class="container">
+    <main>
+        <div class="py-5 text-center">
+            <h2>Калькулятор плёнки</h2>
+        </div>
+        <div class=" h-100 d-flex justify-content-center align-items-center">
+            <form class="needs-validation " action="" method="post">
+                {{ form.hidden_tag() }}
+                <div class="container d-grid gap-3">
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2">
+                            {{ form.material.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.material(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_color_label" hidden>
+                            {{ form.color_orajet.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_color" hidden>
+                            {{ form.color_orajet(class='form-control fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_descr_label" hidden>
+                            {{ form.description.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_descr" hidden>
+                            {{ form.description(class='form-control fs-5') }}
+                        </div>
+
+                    </div>
+                    <div class="row p-2 bg-light border" id="block_quality">
+                        <div class="col col-6 p-2">
+                            {{ form.print_quality.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.print_quality(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2">
+                            {{ form.lamination.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.lamination(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row p-2 bg-light border">
+                        <div class="col col-6 p-2">
+                            {{ form.cutting.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2">
+                            {{ form.cutting(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_type_label" hidden>
+                            {{ form.type_selection.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_type" hidden>
+                            {{ form.type_selection(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_complexity_label" hidden>
+                            {{ form.complexity_selection.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_complexity" hidden>
+                            {{ form.complexity_selection(class='form-select fs-5') }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_mounting_label" hidden>
+                            {{ form.mounting_plastic.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col col-6 p-2" id="block_mounting" hidden>
+                            {{ form.mounting_plastic(class='form-select fs-5') }}
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 p-2 bg-light border">
+                        <div class="col-12 text-center">
+                            <label class="form-label fs-5">Размеры пленки</label>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.length.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.length(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2">
+                            <label class="fs-5"> мм. </label>
+                        </div>
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.width.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.width(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2">
+                            <label class="fs-5"> мм. </label>
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 p-2 bg-light border">
+                        <div class="col-2 pt-2 pb-2">
+                            {{ form.quantity.label(class="form-label fs-5") }}
+                        </div>
+                        <div class="col-8">
+                            {{ form.quantity(class='form-control fs-5') }}
+                        </div>
+                        <div class="col-2">
+                            <label class="fs-5"> шт. </label>
+                        </div>
+                    </div>
+                    {{ form.submit(class='btn btn-primary fs-5')}}
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+<!--Скрипт отображения или скрытия вида выборки в зависимости от резки (плоттер)-->
+<script>
+    let cutting = document.getElementById('cutting')
+    cutting.onchange = function () {
+        let value_cut= cutting.value;
+        if (value_cut === 'Плоттер') {
+            document.getElementById("block_type_label").hidden = false;
+            document.getElementById("block_type").hidden = false;
+        } else {
+            document.getElementById("block_type_label").hidden = true;
+            document.getElementById("block_type").hidden = true;
+            document.getElementById("block_complexity_label").hidden = true;
+            document.getElementById("block_complexity").hidden = true;
+            document.getElementById("block_mounting_label").hidden = true;
+            document.getElementById("block_mounting").hidden = true;
+        }
+    }
+</script>
+
+<!--Скрипт отображения или скрытия Сложность выборки и Монтажная пленки в зависимости от вида выборки-->
+<script>
+    let type_selection = document.getElementById('type_selection')
+    type_selection.onchange = function () {
+        let value = type_selection.value;
+        if (value === 'Без выборки') {
+            document.getElementById("block_complexity_label").hidden = true;
+            document.getElementById("block_complexity").hidden = true;
+            document.getElementById("block_mounting_label").hidden = true;
+            document.getElementById("block_mounting").hidden = true;
+        } else {
+            document.getElementById("block_complexity_label").hidden = false;
+            document.getElementById("block_complexity").hidden = false;
+            document.getElementById("block_mounting_label").hidden = false;
+            document.getElementById("block_mounting").hidden = false;
+        }
+    }
+</script>
+
+<!--Скрипт отображения или скрытия качества печати в зависимости от материала-->
+<script>
+    let material = document.getElementById('material')
+    material.onchange = function () {
+        let value = material.value;
+        if (value === 'Orajet цветная') {
+            document.getElementById("block_quality").hidden = true;
+            document.getElementById("block_descr_label").hidden = true;
+            document.getElementById("block_descr").hidden = true;
+            document.getElementById("block_color_label").hidden = false;
+            document.getElementById("block_color").hidden = false;
+        } else if (value === 'Под заказ') {
+            document.getElementById("block_quality").hidden = true;
+            document.getElementById("block_color_label").hidden = true;
+            document.getElementById("block_color").hidden = true;
+            document.getElementById("block_descr_label").hidden = false;
+            document.getElementById("block_descr").hidden = false;
+        } else {
+            document.getElementById("block_quality").hidden = false;
+            document.getElementById("block_color_label").hidden = true;
+            document.getElementById("block_color").hidden = true;
+            document.getElementById("block_descr_label").hidden = true;
+            document.getElementById("block_descr").hidden = true;
+        }
+    }
+</script>
+
+{% if data %}
+<script>
+    $(document).ready(function () {
+        $("#staticBackdrop").modal('show');
+    });
+</script>
+{% endif %}
+{% endblock %}
